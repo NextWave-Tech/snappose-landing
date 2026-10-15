@@ -38,12 +38,12 @@ const STEPS = [
     pill: 'Cà phê · Nữ',
     loadingPill: 'Đang tìm pose…',
     title: 'Chạm ✦, nhận 3 pose hợp cảnh',
-    body: 'App gửi một khung hình lên máy chủ. Mô hình CLIP đoán bạn đang ở biển, công viên, quán cà phê hay đang selfie, rồi chọn 3 pose giống cảnh nhất trong 131 pose mẫu. Chạm ✦ lần nữa để xem 3 pose tiếp theo.',
+    body: 'SnapPose nhận ra bạn đang ở biển, công viên, quán cà phê hay đang selfie, rồi gợi ý ngay 3 pose hợp với khung cảnh. Chưa ưng thì chạm ✦ lần nữa để xem thêm.',
   },
   {
     pill: 'Cà phê · Nữ',
     title: 'Đứng vào khung viền',
-    body: 'Đường viền của pose nằm đè lên camera. Dùng nút + và − để chỉnh khung từ 30% đến 250% cho vừa khoảng cách, người được chụp chỉ việc khớp theo.',
+    body: 'Đường viền của pose hiện ngay trên camera. Phóng to hoặc thu nhỏ khung cho vừa khoảng cách, người được chụp chỉ việc khớp theo.',
   },
   {
     pill: 'Cà phê · Nữ',
@@ -214,29 +214,24 @@ app.innerHTML = `
     <div class="container">
       <div class="chapter-head" data-reveal>
         <span class="chapter-num">Công nghệ</span>
-        <h2>Sau khi bạn chạm <span class="ink-blue">nút ✦</span></h2>
-        <p>Đây là những gì app làm trong vài giây đó.</p>
+        <h2>Gợi ý <span class="ink-blue">đúng cảnh, đúng người</span></h2>
+        <p>Không cần chọn tay hay gõ tìm, chạm ✦ là xong.</p>
       </div>
       <div class="inside-flow">
         <div class="inside-card" data-reveal>
           <div class="icon-tile tile-blue"><i data-lucide="scan-search"></i></div>
-          <span class="inside-step">Bước 1</span>
-          <h3>Nhận diện bối cảnh</h3>
-          <p>Mô hình CLIP so khung hình với mô tả từng loại địa điểm và với ảnh mẫu của từng bối cảnh. Với camera trước, app phân biệt thêm selfie cận mặt hay toàn thân.</p>
+          <h3>Hiểu bạn đang ở đâu</h3>
+          <p>Biển, công viên, quán cà phê hay đang selfie, SnapPose tự nhận ra khung cảnh trước mặt bạn.</p>
         </div>
-        <div class="inside-arrow" aria-hidden="true"><i data-lucide="arrow-right"></i></div>
         <div class="inside-card" data-reveal>
           <div class="icon-tile tile-pink"><i data-lucide="users"></i></div>
-          <span class="inside-step">Bước 2</span>
-          <h3>Lọc theo người được chụp</h3>
-          <p>App đoán người trong khung là nam hay nữ để chỉ gợi ý pose phù hợp.</p>
+          <h3>Hợp với người được chụp</h3>
+          <p>Chỉ gợi ý những dáng hợp với người đứng trước ống kính, không phải lướt qua pose không dành cho mình.</p>
         </div>
-        <div class="inside-arrow" aria-hidden="true"><i data-lucide="arrow-right"></i></div>
         <div class="inside-card" data-reveal>
           <div class="icon-tile tile-blue"><i data-lucide="layers"></i></div>
-          <span class="inside-step">Bước 3</span>
-          <h3>Xếp hạng pose</h3>
-          <p>Pose có ảnh mẫu giống khung cảnh của bạn nhất được xếp lên đầu, mỗi lần hiện 3 pose.</p>
+          <h3>Pose hợp nhất lên trước</h3>
+          <p>Mỗi lần chạm ✦ là 3 pose hợp cảnh nhất. Muốn thêm thì chạm tiếp.</p>
         </div>
       </div>
     </div>
