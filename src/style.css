@@ -630,6 +630,7 @@ a { color: inherit; }
 }
 .pose-tab-btn:hover { border-color: var(--pink); color: var(--pink-deep); }
 .pose-tab-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.tab-short { display: none; }
 
 .pose-showcase { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center; }
 
@@ -885,9 +886,18 @@ a { color: inherit; }
   .store-btn { padding: 8px 12px; gap: 8px; border-radius: 14px; }
   .store-btn svg { width: 22px; height: 22px; }
   .store-btn span { font-size: 0.92rem; }
-  .pose-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; margin: 0 -16px 24px; padding: 2px 16px 6px; scrollbar-width: none; }
-  .pose-tabs::-webkit-scrollbar { display: none; }
-  .pose-tab-btn { flex-shrink: 0; }
+  /* Pose explorer: no outer card, 4 equal category tabs, shorter photo */
+  .explore-box { padding: 0; border: 0; background: none; box-shadow: none; }
+  .pose-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 18px; }
+  .pose-tab-btn { flex-direction: column; justify-content: center; gap: 4px; padding: 9px 4px; border-radius: 14px; font-size: 0.76rem; background: #fff; }
+  .pose-tab-btn [data-lucide], .pose-tab-btn .lucide { font-size: 1.15rem; }
+  .tab-long { display: none; }
+  .tab-short { display: inline; white-space: nowrap; }
+  .pose-showcase { gap: 18px; }
+  .pose-visual-card { aspect-ratio: 4 / 5; max-height: 58svh; margin: 0 auto; border-radius: 20px; }
+  .pose-view-btn { padding: 8px 6px; font-size: 0.82rem; }
+  .pose-info-pane { gap: 12px; }
+  .pose-tips-box { padding: 14px 16px; }
   .hero { padding: 84px 0 40px; }
   .hero-inner { gap: 28px; }
   .eyebrow-pill { padding: 6px 12px; }
@@ -909,7 +919,6 @@ a { color: inherit; }
   .apk-field { padding: 12px 14px; }
   .apk-form .btn { justify-content: center; border-radius: 16px; }
   .chapter { padding: 80px 0; }
-  .explore-box { padding: 20px 16px; border-radius: 22px; }
   .pose-tab-btn { padding: 8px 14px; font-size: 0.85rem; }
   .ai-diag-item { flex-direction: column; gap: 2px; }
   .ai-diag-item .val { text-align: left; }

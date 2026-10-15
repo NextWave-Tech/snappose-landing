@@ -242,7 +242,7 @@ app.innerHTML = `
     <div class="container">
       <div class="chapter-head" data-reveal>
         <span class="chapter-num">Pose gợi ý</span>
-        <h2>Xem trước một vài <span class="ink-pink">pose gợi ý</span></h2>
+        <h2>Xem thử vài <span class="ink-pink">pose gợi ý</span></h2>
         <p>Bấm “Khung viền” để xem đúng thứ hiện trên camera khi chụp.</p>
       </div>
 
@@ -446,7 +446,7 @@ POSE_SUGGESTIONS.forEach((pose, idx) => {
   const btn = document.createElement('button');
   btn.className = `pose-tab-btn ${idx === 0 ? 'active' : ''}`;
   btn.setAttribute('role', 'tab');
-  btn.innerHTML = `<i data-lucide="${pose.icon}"></i><span>${pose.title}</span>`;
+  btn.innerHTML = `<i data-lucide="${pose.icon}"></i><span class="tab-long">${pose.title}</span><span class="tab-short">${pose.category}</span>`;
   btn.addEventListener('click', () => switchPose(idx));
   poseTabsContainer.appendChild(btn);
 });
