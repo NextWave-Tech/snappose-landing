@@ -19,6 +19,7 @@ const DEMO = [
   { photo: '/poses/ca-phe/nu/16-photo.jpg', outline: '/poses/ca-phe/nu/16-skeleton.png' },
   { photo: '/poses/ca-phe/nu/17-photo.jpg' },
   { photo: '/poses/ca-phe/nu/03-photo.png' },
+  { photo: '/poses/ca-phe/nu/02-photo.png' },
 ];
 
 const HERO_PHOTOS = [
@@ -37,8 +38,8 @@ const STEPS = [
   {
     pill: 'Cà phê · Nữ',
     loadingPill: 'Đang tìm pose…',
-    title: 'Chạm ✦, nhận 3 pose hợp cảnh',
-    body: 'SnapPose nhận ra bạn đang ở biển, công viên, quán cà phê hay đang selfie, rồi gợi ý ngay 3 pose hợp với khung cảnh. Chưa ưng thì chạm ✦ lần nữa để xem thêm.',
+    title: 'Chạm ✦ để nhận gợi ý pose',
+    body: 'SnapPose nhận ra bạn đang ở biển, công viên, quán cà phê hay đang selfie, rồi gợi ý ngay các pose hợp với khung cảnh. Chưa ưng thì chạm ✦ lần nữa để xem thêm.',
   },
   {
     pill: 'Cà phê · Nữ',
@@ -54,6 +55,9 @@ const STEPS = [
 
 const FANPAGE_URL = 'https://www.facebook.com/profile.php?id=61594910879604';
 const FB_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" class="fb-icon"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>';
+
+// Render every ✦ in copy with the accent colour so it matches the AI button
+const spark = (text) => text.replace(/✦/g, '<span class="spark">✦</span>');
 
 const app = document.getElementById('app');
 
@@ -83,11 +87,6 @@ app.innerHTML = `
         <div class="hero-cta-group">
           <a href="#story" class="btn btn-primary">Xem cách hoạt động<i data-lucide="arrow-right"></i></a>
           <a href="#cta" class="btn btn-ghost"><i data-lucide="download"></i>Dùng thử bản APK</a>
-        </div>
-        <div class="hero-facts">
-          <div><strong>131</strong><span>pose mẫu</span></div>
-          <div><strong>4</strong><span>bối cảnh</span></div>
-          <div><strong>1 chạm</strong><span>để nhận gợi ý</span></div>
         </div>
       </div>
       <div class="hero-photos" aria-hidden="true">
@@ -146,6 +145,7 @@ app.innerHTML = `
               <img class="ph-photo ph-before" src="/demo/before.webp" alt="" />
               <img class="ph-outline" src="${DEMO[0].outline}" alt="" />
               <div class="ph-flash"></div>
+              <img class="ph-capture" src="${DEMO[0].photo}" alt="" />
 
               <div class="ph-top">
                 <div class="ph-status">
@@ -164,7 +164,7 @@ app.innerHTML = `
                 <div class="ph-zoom">1x</div>
                 <div class="ph-strip">
                   <div class="ph-strip-head">
-                    <b>Gợi ý</b><small>3 pose</small><span class="ph-clear">↺ Xóa</span>
+                    <b>Gợi ý</b><small>${DEMO.length} pose</small><span class="ph-clear">↺ Xóa</span>
                   </div>
                   <div class="ph-tiles">
                     ${DEMO.map((d, i) => `
@@ -190,8 +190,8 @@ app.innerHTML = `
           </div>
           <div class="stage-caption" id="stage-caption" aria-live="polite">
             <span class="step-num" id="cap-num">01</span>
-            <h3 id="cap-title">${STEPS[0].title}</h3>
-            <p id="cap-body">${STEPS[0].body}</p>
+            <h3 id="cap-title">${spark(STEPS[0].title)}</h3>
+            <p id="cap-body">${spark(STEPS[0].body)}</p>
           </div>
         </div>
 
@@ -200,8 +200,8 @@ app.innerHTML = `
             <article class="step ${i === 0 ? 'active' : ''}" data-step="${i}">
               <div class="step-card">
                 <span class="step-num">0${i + 1}</span>
-                <h3>${s.title}</h3>
-                <p>${s.body}</p>
+                <h3>${spark(s.title)}</h3>
+                <p>${spark(s.body)}</p>
               </div>
             </article>`).join('')}
         </div>
@@ -215,7 +215,7 @@ app.innerHTML = `
       <div class="chapter-head" data-reveal>
         <span class="chapter-num">Công nghệ</span>
         <h2>Gợi ý <span class="ink-blue">đúng cảnh, đúng người</span></h2>
-        <p>Không cần chọn tay hay gõ tìm, chạm ✦ là xong.</p>
+        <p>Không cần chọn tay hay gõ tìm, chạm <span class="spark">✦</span> là xong.</p>
       </div>
       <div class="inside-flow">
         <div class="inside-card" data-reveal>
@@ -231,7 +231,7 @@ app.innerHTML = `
         <div class="inside-card" data-reveal>
           <div class="icon-tile tile-blue"><i data-lucide="layers"></i></div>
           <h3>Pose hợp nhất lên trước</h3>
-          <p>Mỗi lần chạm ✦ là 3 pose hợp cảnh nhất. Muốn thêm thì chạm tiếp.</p>
+          <p>Các pose hợp cảnh nhất được đưa lên trước. Muốn thêm thì chạm <span class="spark">✦</span> tiếp.</p>
         </div>
       </div>
     </div>
@@ -391,8 +391,8 @@ function setStep(idx) {
   steps.forEach((s, i) => s.classList.toggle('active', i === idx));
   progressDots.forEach((d, i) => d.classList.toggle('on', i <= idx));
   capNum.textContent = `0${idx + 1}`;
-  capTitle.textContent = STEPS[idx].title;
-  capBody.textContent = STEPS[idx].body;
+  capTitle.innerHTML = spark(STEPS[idx].title);
+  capBody.innerHTML = spark(STEPS[idx].body);
   caption.classList.remove('swap');
   void caption.offsetWidth; // restart the fade-in
   caption.classList.add('swap');
