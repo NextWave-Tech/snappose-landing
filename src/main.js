@@ -14,19 +14,19 @@ const ICONS = {
 };
 const renderIcons = () => createIcons({ icons: ICONS, attrs: { 'stroke-width': 1.9 } });
 
-// The phone demo walks through one real café suggestion (pose photo + its outline line up 1:1)
+// The phone demo uses a static café pose and its matching outline from the local pose dataset.
 const DEMO = [
-  { photo: '/poses/ca-phe/nu/16-photo.jpg', outline: '/poses/ca-phe/nu/16-skeleton.png' },
-  { photo: '/poses/ca-phe/nu/17-photo.jpg' },
-  { photo: '/poses/ca-phe/nu/03-photo.png' },
-  { photo: '/poses/ca-phe/nu/02-photo.png' },
+  { photo: 'poses/ca-phe/nu/16-photo.jpg', outline: 'poses/ca-phe/nu/16-skeleton.png' },
+  { photo: 'poses/ca-phe/nu/17-photo.jpg' },
+  { photo: 'poses/ca-phe/nu/03-photo.png' },
+  { photo: 'poses/ca-phe/nu/02-photo.png' },
 ];
 
 const HERO_PHOTOS = [
-  { src: '/poses/bien/nu/39-photo.png', label: 'Biển' },
-  { src: '/poses/selfie/nam/21-photo.jpg', label: 'Selfie' },
-  { src: '/poses/cong-vien/nu/34-photo.jpg', label: 'Công viên' },
-  { src: '/poses/ca-phe/nam/14-photo.jpg', label: 'Cà phê' },
+  { src: 'poses/bien/nu/39-photo.png', label: 'Biển' },
+  { src: 'poses/selfie/nam/21-photo.jpg', label: 'Selfie' },
+  { src: 'poses/cong-vien/nu/34-photo.jpg', label: 'Công viên' },
+  { src: 'poses/ca-phe/nam/09-photo.jpg', label: 'Cà phê' },
 ];
 
 const STEPS = [
@@ -64,7 +64,7 @@ const app = document.getElementById('app');
 app.innerHTML = `
   <nav class="navbar" id="navbar">
     <a href="#top" class="nav-brand">
-      <img src="/logo.png" alt="" class="nav-logo-img" width="36" height="36" />
+      <img src="logo.png" alt="" class="nav-logo-img" width="36" height="36" />
       <span class="nav-logo">SnapPose</span>
     </a>
     <ul class="nav-links">
@@ -81,7 +81,7 @@ app.innerHTML = `
   <header class="hero" id="top">
     <div class="hero-inner">
       <div class="hero-copy">
-        <div class="eyebrow-pill"><i data-lucide="sparkles"></i>Gợi ý tạo dáng ngay trên camera</div>
+        <p class="hero-kicker">Sắp ra mắt</p>
         <h1 class="hero-title">Hết lúng túng<br/>trước <span class="ink-gradient">ống kính.</span></h1>
         <p class="hero-subtitle">SnapPose nhận ra bạn đang ở đâu, gợi ý dáng chụp hợp cảnh và hiện khung viền ngay trên camera để bạn đứng theo.</p>
         <div class="hero-cta-group">
@@ -103,7 +103,6 @@ app.innerHTML = `
   <section class="chapter problem" id="problem">
     <div class="container">
       <div class="chapter-head" data-reveal>
-        <span class="chapter-num">Vấn đề</span>
         <h2>Đứng trước ống kính mà <span class="ink-pink">không biết làm gì?</span></h2>
         <p>Cảnh đẹp, máy tốt, nhưng tay để đâu, mặt nhìn hướng nào thì không ai chỉ.</p>
       </div>
@@ -131,7 +130,6 @@ app.innerHTML = `
   <section class="story" id="story">
     <div class="container">
       <div class="chapter-head" data-reveal>
-        <span class="chapter-num">Cách hoạt động</span>
         <h2>Từ lúc mở app <span class="ink-blue">đến lúc bấm chụp</span></h2>
         <p>Cuộn xuống để xem từng bước.</p>
       </div>
@@ -140,9 +138,8 @@ app.innerHTML = `
         <div class="story-stage">
           <div class="phone" id="phone" data-step="0">
             <div class="ph-screen">
-              <img class="ph-photo" src="${DEMO[0].photo}" alt="" />
-              <!-- Same person before lining up with the outline (AI-edited from the pose photo) -->
-              <img class="ph-photo ph-before" src="/demo/before.webp" alt="" />
+              <img class="ph-photo ph-before" src="demo/before.webp" alt="" />
+              <img class="ph-photo ph-reference" src="${DEMO[0].photo}" alt="" />
               <img class="ph-outline" src="${DEMO[0].outline}" alt="" />
               <div class="ph-flash"></div>
               <img class="ph-capture" src="${DEMO[0].photo}" alt="" />
@@ -213,7 +210,6 @@ app.innerHTML = `
   <section class="chapter inside" id="inside">
     <div class="container">
       <div class="chapter-head" data-reveal>
-        <span class="chapter-num">Công nghệ</span>
         <h2>Gợi ý <span class="ink-blue">đúng cảnh, đúng người</span></h2>
         <p>Không cần chọn tay hay gõ tìm, chạm <span class="spark">✦</span> là xong.</p>
       </div>
@@ -241,7 +237,6 @@ app.innerHTML = `
   <section class="chapter explore" id="explore">
     <div class="container">
       <div class="chapter-head" data-reveal>
-        <span class="chapter-num">Pose gợi ý</span>
         <h2>Xem thử vài <span class="ink-pink">pose gợi ý</span></h2>
         <p>Bấm “Khung viền” để xem đúng thứ hiện trên camera khi chụp.</p>
       </div>
@@ -261,8 +256,9 @@ app.innerHTML = `
 
           <div class="pose-info-pane">
             <div class="pose-meta-row">
-              <span class="chip chip-blue" id="pose-category"></span>
-              <span class="chip chip-pink" id="pose-gender"></span>
+              <span id="pose-category"></span>
+              <span class="pose-meta-sep" aria-hidden="true">·</span>
+              <span id="pose-gender"></span>
             </div>
             <h3 class="pose-name" id="pose-name"></h3>
             <div class="pose-tags-list" id="pose-tags"></div>
@@ -296,7 +292,7 @@ app.innerHTML = `
   <footer class="footer" id="cta">
     <div class="container">
       <div class="cta-box" data-reveal>
-        <img src="/logo.png" alt="Logo SnapPose" class="cta-logo" width="88" height="88" />
+        <img src="logo.png" alt="Logo SnapPose" class="cta-logo" width="88" height="88" />
         <h2>Dùng thử <span class="ink-gradient">bản APK</span></h2>
         <p>SnapPose đang chạy thử trên Android. Để lại email, bọn mình gửi link tải bản APK mới nhất cho bạn.</p>
 
@@ -333,12 +329,11 @@ app.innerHTML = `
 
       <div class="footer-bottom">
         <div class="footer-brand">
-          <img src="/logo.png" alt="" width="24" height="24" />
-          © 2026 SnapPose · NextWave Tech
+          <img src="logo.png" alt="" width="24" height="24" />
+          © SnapPose · NextWave Tech
         </div>
         <div class="footer-links">
-          <a href="#story">Cách hoạt động</a>
-          <a href="#explore">Thử pose</a>
+          <a href="mailto:contact.nextwavetech@gmail.com" class="footer-email"><i data-lucide="mail"></i><span>contact.nextwavetech@gmail.com</span></a>
           <a href="${FANPAGE_URL}" target="_blank" rel="noopener" class="footer-fb">${FB_ICON}Facebook</a>
         </div>
       </div>
@@ -377,7 +372,7 @@ const capBody = document.getElementById('cap-body');
 
 let pillTimer;
 
-function setStep(idx) {
+function setStep(idx, direction = 'down') {
   if (phone.dataset.step === String(idx)) return;
   phone.dataset.step = idx;
   // The suggest step briefly shows the app's "searching" state before the result
@@ -393,17 +388,43 @@ function setStep(idx) {
   capNum.textContent = `0${idx + 1}`;
   capTitle.innerHTML = spark(STEPS[idx].title);
   capBody.innerHTML = spark(STEPS[idx].body);
+  caption.dataset.direction = direction;
   caption.classList.remove('swap');
   void caption.offsetWidth; // restart the fade-in
   caption.classList.add('swap');
 }
 
-const stepObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) setStep(Number(entry.target.dataset.step));
+let stepSyncFrame = 0;
+let storyScrollY = window.scrollY;
+function syncStoryStep() {
+  stepSyncFrame = 0;
+  const currentScrollY = window.scrollY;
+  const direction = currentScrollY < storyScrollY ? 'up' : 'down';
+  storyScrollY = currentScrollY;
+  const focusY = window.innerHeight * 0.5;
+  let nearestIndex = 0;
+  let nearestDistance = Infinity;
+
+  steps.forEach((step, index) => {
+    const rect = step.getBoundingClientRect();
+    const distance = Math.abs((rect.top + rect.bottom) * 0.5 - focusY);
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
   });
-}, { rootMargin: '-45% 0px -45% 0px' });
-steps.forEach((s) => stepObserver.observe(s));
+
+  setStep(nearestIndex, direction);
+}
+
+function queueStoryStepSync() {
+  if (stepSyncFrame) return;
+  stepSyncFrame = requestAnimationFrame(syncStoryStep);
+}
+
+window.addEventListener('scroll', queueStoryStepSync, { passive: true });
+window.addEventListener('resize', queueStoryStepSync);
+queueStoryStepSync();
 
 // ─── APK TRIAL FORM (mock: nothing is sent yet) ───────────────────────────
 const apkForm = document.getElementById('apk-form');
@@ -446,8 +467,20 @@ POSE_SUGGESTIONS.forEach((pose, idx) => {
   const btn = document.createElement('button');
   btn.className = `pose-tab-btn ${idx === 0 ? 'active' : ''}`;
   btn.setAttribute('role', 'tab');
+  btn.id = 'pose-tab-' + idx;
+  btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+  btn.tabIndex = idx === 0 ? 0 : -1;
   btn.innerHTML = `<i data-lucide="${pose.icon}"></i><span class="tab-long">${pose.title}</span><span class="tab-short">${pose.category}</span>`;
   btn.addEventListener('click', () => switchPose(idx));
+  btn.addEventListener('keydown', (event) => {
+    const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1
+      : ['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 0;
+    if (!direction) return;
+    event.preventDefault();
+    const next = (idx + direction + POSE_SUGGESTIONS.length) % POSE_SUGGESTIONS.length;
+    switchPose(next);
+    poseTabsContainer.children[next].focus();
+  });
   poseTabsContainer.appendChild(btn);
 });
 renderIcons();
@@ -457,10 +490,13 @@ function switchPose(idx) {
 
   document.querySelectorAll('.pose-tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', i === idx);
+    btn.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    btn.tabIndex = i === idx ? 0 : -1;
   });
 
   poseVisualCard.classList.add('swapping');
   setTimeout(() => {
+    poseVisualCard.dataset.pose = pose.id;
     poseImgPhoto.src = pose.photoUrl;
     poseImgSkeleton.src = pose.skeletonUrl;
     poseNameEl.textContent = pose.title;
@@ -470,9 +506,7 @@ function switchPose(idx) {
     aiLightingEl.textContent = pose.aiAnalysis.lighting;
     aiCompositionEl.textContent = pose.aiAnalysis.composition;
     aiMoodEl.textContent = pose.aiAnalysis.mood;
-    poseTagsEl.innerHTML = pose.tags
-      .map(tag => `<span class="pose-tag-chip">#${tag}</span>`)
-      .join('');
+    poseTagsEl.textContent = pose.tags.join(' · ');
     poseVisualCard.classList.remove('swapping');
   }, 180);
 }

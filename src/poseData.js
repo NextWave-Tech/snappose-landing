@@ -3,35 +3,51 @@
  */
 export const POSE_SUGGESTIONS = [
   {
-    id: 'ca-phe-nu-16',
-    title: 'Ngồi bàn, cười với ống kính',
-    category: 'Cà phê',
-    icon: 'coffee',
+    id: 'selfie-nu-39',
+    title: 'Selfie cầm kem',
+    category: 'Selfie',
+    icon: 'smartphone',
     gender: 'Nữ',
-    photoUrl: '/poses/ca-phe/nu/16-photo.jpg',
-    skeletonUrl: '/poses/ca-phe/nu/16-skeleton.png',
-    tags: ['Nửa người', 'Nhìn thẳng', 'Ngồi'],
-    tips: 'Ngồi thẳng lưng, hai tay để hờ quanh ly nước, đầu hơi nghiêng và cười nhìn vào máy.',
+    photoUrl: 'poses/selfie/nu/39-photo.png',
+    skeletonUrl: 'poses/selfie/nu/39-skeleton.png',
+    tags: ['Selfie', 'Cận cảnh', 'Ngoài trời'],
+    tips: 'Giơ máy cao ngang mắt, tay kia đưa cây kem lại gần khung hình, cười và nghiêng đầu nhẹ.',
     aiAnalysis: {
-      lighting: 'Nắng dưới mái hiên',
-      composition: 'Nửa người, ở giữa khung',
-      mood: 'Vui, gần gũi'
+      lighting: 'Nắng chiếu xiên vào mặt',
+      composition: 'Cận nửa người, biển phía sau',
+      mood: 'Tươi, tinh nghịch'
     }
   },
   {
-    id: 'bien-nu-30',
-    title: 'Giữ mũ, bước dọc bờ biển',
-    category: 'Biển',
-    icon: 'waves',
-    gender: 'Nữ',
-    photoUrl: '/poses/bien/nu/30-photo.png',
-    skeletonUrl: '/poses/bien/nu/30-skeleton.png',
-    tags: ['Toàn thân', 'Đang bước', 'Có gió'],
-    tips: 'Một tay giữ vành mũ, bước chéo chân về phía trước, mặt hơi quay đi để gió thổi váy.',
+    id: 'ca-phe-nam-09',
+    title: 'Đứng tựa quầy, cầm ly cà phê',
+    category: 'Cà phê',
+    icon: 'coffee',
+    gender: 'Nam',
+    photoUrl: 'poses/ca-phe/nam/09-photo.jpg',
+    skeletonUrl: 'poses/ca-phe/nam/09-skeleton.png',
+    tags: ['Toàn thân', 'Nhìn nghiêng', 'Đứng'],
+    tips: 'Thả lỏng vai, tựa nhẹ hông vào quầy, một tay cầm ly cà phê và nhìn về phía cửa.',
     aiAnalysis: {
-      lighting: 'Nắng trưa, trời trong',
-      composition: 'Toàn thân, biển làm nền',
-      mood: 'Nhẹ nhàng'
+      lighting: 'Ánh đèn ấm trong quán cà phê',
+      composition: 'Toàn thân, tựa quầy và nhìn nghiêng',
+      mood: 'Lịch lãm, tự tin'
+    }
+  },
+  {
+    id: 'cong-vien-nu-22',
+    title: 'Bước dạo bên hồ',
+    category: 'Công viên',
+    icon: 'trees',
+    gender: 'Nữ',
+    photoUrl: 'poses/cong-vien/nu/22-photo.jpg',
+    skeletonUrl: 'poses/cong-vien/nu/22-skeleton.png',
+    tags: ['Toàn thân', 'Đang bước', 'Bên hồ'],
+    tips: 'Bước một chân về phía trước, thả lỏng vai, tay cầm túi nhẹ ra sau và nhìn theo hướng bước.',
+    aiAnalysis: {
+      lighting: 'Ánh sáng dịu dưới tán cây',
+      composition: 'Toàn thân, lối đi và hồ phía sau',
+      mood: 'Nhẹ nhàng, thư thái'
     }
   },
   {
@@ -40,30 +56,14 @@ export const POSE_SUGGESTIONS = [
     category: 'Công viên',
     icon: 'trees',
     gender: 'Nam',
-    photoUrl: '/poses/cong-vien/nam/08-photo.jpg',
-    skeletonUrl: '/poses/cong-vien/nam/08-skeleton.png',
+    photoUrl: 'poses/cong-vien/nam/08-photo.jpg',
+    skeletonUrl: 'poses/cong-vien/nam/08-skeleton.png',
     tags: ['Toàn thân', 'Không nhìn máy', 'Mùa hoa'],
     tips: 'Tựa hông vào lan can, một tay chống ra sau, ngửa mặt nhìn lên tán hoa.',
     aiAnalysis: {
       lighting: 'Trời trong, nắng qua tán cây',
       composition: 'Lối đi dẫn mắt về người',
       mood: 'Thư thả'
-    }
-  },
-  {
-    id: 'selfie-nu-39',
-    title: 'Selfie cầm kem',
-    category: 'Selfie',
-    icon: 'smartphone',
-    gender: 'Nữ',
-    photoUrl: '/poses/selfie/nu/39-photo.png',
-    skeletonUrl: '/poses/selfie/nu/39-skeleton.png',
-    tags: ['Selfie', 'Cận cảnh', 'Ngoài trời'],
-    tips: 'Giơ máy cao ngang mắt, tay kia đưa cây kem lại gần khung hình, cười và nghiêng đầu nhẹ.',
-    aiAnalysis: {
-      lighting: 'Nắng chiếu xiên vào mặt',
-      composition: 'Cận nửa người, biển phía sau',
-      mood: 'Tươi, tinh nghịch'
     }
   }
 ];
