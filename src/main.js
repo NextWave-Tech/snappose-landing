@@ -345,7 +345,13 @@ renderIcons();
 
 // ─── NAVBAR SHADOW ON SCROLL ──────────────────────────────────────────────
 const navbar = document.getElementById('navbar');
-const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 12);
+let navScrolled = false;
+const onScroll = () => {
+  const scrolled = window.scrollY > 12;
+  if (scrolled === navScrolled) return;
+  navScrolled = scrolled;
+  navbar.classList.toggle('scrolled', scrolled);
+};
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
@@ -388,43 +394,27 @@ function setStep(idx, direction = 'down') {
   capNum.textContent = `0${idx + 1}`;
   capTitle.innerHTML = spark(STEPS[idx].title);
   capBody.innerHTML = spark(STEPS[idx].body);
-  caption.dataset.direction = direction;
-  caption.classList.remove('swap');
-  void caption.offsetWidth; // restart the fade-in
-  caption.classList.add('swap');
+  // Web Animations API: restarts the fade-in without forcing a layout
+  caption.getAnimations().forEach((a) => a.cancel());
+  caption.animate(
+    [{ opacity: 0, transform: `translateY(${direction === 'up' ? -8 : 8}px)` }, { opacity: 1, transform: 'none' }],
+    { duration: 350, easing: 'ease' }
+  );
 }
 
-let stepSyncFrame = 0;
-let storyScrollY = window.scrollY;
-function syncStoryStep() {
-  stepSyncFrame = 0;
-  const currentScrollY = window.scrollY;
-  const direction = currentScrollY < storyScrollY ? 'up' : 'down';
-  storyScrollY = currentScrollY;
-  const focusY = window.innerHeight * 0.5;
-  let nearestIndex = 0;
-  let nearestDistance = Infinity;
-
-  steps.forEach((step, index) => {
-    const rect = step.getBoundingClientRect();
-    const distance = Math.abs((rect.top + rect.bottom) * 0.5 - focusY);
-    if (distance < nearestDistance) {
-      nearestDistance = distance;
-      nearestIndex = index;
-    }
+// A step becomes active when it crosses a zero-height line at the viewport centre.
+// IntersectionObserver runs off the scroll handler path, so scrolling stays smooth.
+let currentStep = 0;
+const stepObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    const idx = Number(entry.target.dataset.step);
+    if (idx === currentStep) return;
+    setStep(idx, idx > currentStep ? 'down' : 'up');
+    currentStep = idx;
   });
-
-  setStep(nearestIndex, direction);
-}
-
-function queueStoryStepSync() {
-  if (stepSyncFrame) return;
-  stepSyncFrame = requestAnimationFrame(syncStoryStep);
-}
-
-window.addEventListener('scroll', queueStoryStepSync, { passive: true });
-window.addEventListener('resize', queueStoryStepSync);
-queueStoryStepSync();
+}, { rootMargin: '-50% 0px -50% 0px' });
+steps.forEach((step) => stepObserver.observe(step));
 
 // ─── APK TRIAL FORM (mock: nothing is sent yet) ───────────────────────────
 const apkForm = document.getElementById('apk-form');
