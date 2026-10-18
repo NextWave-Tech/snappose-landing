@@ -402,19 +402,41 @@ function setStep(idx, direction = 'down') {
   );
 }
 
-// A step becomes active when it crosses a zero-height line at the viewport centre.
-// IntersectionObserver runs off the scroll handler path, so scrolling stays smooth.
+// The active step is derived from the scroll position every frame (never from
+// "crossing" events), so fast flings can't skip or desync it. Step offsets are
+// cached, so scrolling does no layout reads.
+let stepTops = [];
 let currentStep = 0;
-const stepObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    const idx = Number(entry.target.dataset.step);
-    if (idx === currentStep) return;
-    setStep(idx, idx > currentStep ? 'down' : 'up');
-    currentStep = idx;
-  });
-}, { rootMargin: '-50% 0px -50% 0px' });
-steps.forEach((step) => stepObserver.observe(step));
+let stepSyncFrame = 0;
+
+function measureSteps() {
+  const y = window.scrollY;
+  stepTops = [...steps].map((s) => s.getBoundingClientRect().top + y);
+  queueStepSync();
+}
+
+function syncStoryStep() {
+  stepSyncFrame = 0;
+  const focus = window.scrollY + window.innerHeight * 0.5;
+  let idx = 0;
+  for (let i = 0; i < stepTops.length; i++) {
+    if (stepTops[i] <= focus) idx = i;
+  }
+  if (idx === currentStep) return;
+  setStep(idx, idx > currentStep ? 'down' : 'up');
+  currentStep = idx;
+}
+
+function queueStepSync() {
+  if (!stepSyncFrame) stepSyncFrame = requestAnimationFrame(syncStoryStep);
+}
+
+window.addEventListener('scroll', queueStepSync, { passive: true });
+window.addEventListener('resize', measureSteps);
+window.addEventListener('load', measureSteps);
+// body resizes when content above the story shifts (images loading, address bar)
+new ResizeObserver(measureSteps).observe(document.body);
+measureSteps();
 
 // ─── APK TRIAL FORM (mock: nothing is sent yet) ───────────────────────────
 const apkForm = document.getElementById('apk-form');
