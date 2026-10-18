@@ -671,10 +671,11 @@ a { color: inherit; }
   overflow: hidden;
   background: radial-gradient(circle at 50% 30%, #23365f 0%, #0b1424 75%);
   box-shadow: var(--shadow-md);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+  contain: paint;
 }
-.pose-visual-card.swapping { transform: scale(0.97); opacity: 0.6; }
-.pose-visual-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.35s ease, filter 0.35s ease; }
+.pose-visual-card.swapping { opacity: 0.6; }
+.pose-visual-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; will-change: opacity; }
 .pose-visual-card .pose-img-photo,
 .pose-visual-card .pose-img-skeleton {
   object-fit: cover;
@@ -695,8 +696,7 @@ a { color: inherit; }
   position: absolute; left: 14px; right: 14px; bottom: 14px;
   display: flex; padding: 4px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.94);
 }
 .pose-view-btn {
   flex: 1;

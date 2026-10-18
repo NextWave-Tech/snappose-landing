@@ -497,8 +497,27 @@ POSE_SUGGESTIONS.forEach((pose, idx) => {
 });
 renderIcons();
 
+// Fetch + decode a pose's images off-screen so swapping them in never stalls the main thread
+const poseImageCache = new Map();
+function loadPoseImages(pose) {
+  if (!poseImageCache.has(pose.id)) {
+    const load = (url) => {
+      const img = new Image();
+      img.src = url;
+      return img.decode().catch(() => {});
+    };
+    poseImageCache.set(pose.id, Promise.all([load(pose.photoUrl), load(pose.skeletonUrl)]));
+  }
+  return poseImageCache.get(pose.id);
+}
+const preloadAllPoses = () => POSE_SUGGESTIONS.forEach(loadPoseImages);
+if ('requestIdleCallback' in window) requestIdleCallback(preloadAllPoses, { timeout: 2500 });
+else setTimeout(preloadAllPoses, 1500);
+
+let poseSwitchToken = 0;
 function switchPose(idx) {
   const pose = POSE_SUGGESTIONS[idx];
+  const token = ++poseSwitchToken;
 
   document.querySelectorAll('.pose-tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', i === idx);
@@ -507,7 +526,8 @@ function switchPose(idx) {
   });
 
   poseVisualCard.classList.add('swapping');
-  setTimeout(() => {
+  Promise.all([loadPoseImages(pose), new Promise((r) => setTimeout(r, 160))]).then(() => {
+    if (token !== poseSwitchToken) return; // a newer tab click superseded this one
     poseVisualCard.dataset.pose = pose.id;
     poseImgPhoto.src = pose.photoUrl;
     poseImgSkeleton.src = pose.skeletonUrl;
@@ -520,7 +540,7 @@ function switchPose(idx) {
     aiMoodEl.textContent = pose.aiAnalysis.mood;
     poseTagsEl.textContent = pose.tags.join(' · ');
     poseVisualCard.classList.remove('swapping');
-  }, 180);
+  });
 }
 
 switchPose(0);

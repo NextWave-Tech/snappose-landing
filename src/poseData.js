@@ -8,8 +8,8 @@ export const POSE_SUGGESTIONS = [
     category: 'Selfie',
     icon: 'smartphone',
     gender: 'Nữ',
-    photoUrl: 'poses/selfie/nu/39-photo.png',
-    skeletonUrl: 'poses/selfie/nu/39-skeleton.png',
+    photoUrl: 'poses/selfie/nu/39-photo.webp',
+    skeletonUrl: 'poses/selfie/nu/39-skeleton.webp',
     tags: ['Selfie', 'Cận cảnh', 'Ngoài trời'],
     tips: 'Giơ máy cao ngang mắt, tay kia đưa cây kem lại gần khung hình, cười và nghiêng đầu nhẹ.',
     aiAnalysis: {
@@ -24,8 +24,8 @@ export const POSE_SUGGESTIONS = [
     category: 'Cà phê',
     icon: 'coffee',
     gender: 'Nam',
-    photoUrl: 'poses/ca-phe/nam/09-photo.jpg',
-    skeletonUrl: 'poses/ca-phe/nam/09-skeleton.png',
+    photoUrl: 'poses/ca-phe/nam/09-photo.webp',
+    skeletonUrl: 'poses/ca-phe/nam/09-skeleton.webp',
     tags: ['Toàn thân', 'Nhìn nghiêng', 'Đứng'],
     tips: 'Thả lỏng vai, tựa nhẹ hông vào quầy, một tay cầm ly cà phê và nhìn về phía cửa.',
     aiAnalysis: {
@@ -40,8 +40,8 @@ export const POSE_SUGGESTIONS = [
     category: 'Công viên',
     icon: 'trees',
     gender: 'Nữ',
-    photoUrl: 'poses/cong-vien/nu/22-photo.jpg',
-    skeletonUrl: 'poses/cong-vien/nu/22-skeleton.png',
+    photoUrl: 'poses/cong-vien/nu/22-photo.webp',
+    skeletonUrl: 'poses/cong-vien/nu/22-skeleton.webp',
     tags: ['Toàn thân', 'Đang bước', 'Bên hồ'],
     tips: 'Bước một chân về phía trước, thả lỏng vai, tay cầm túi nhẹ ra sau và nhìn theo hướng bước.',
     aiAnalysis: {
@@ -56,8 +56,8 @@ export const POSE_SUGGESTIONS = [
     category: 'Công viên',
     icon: 'trees',
     gender: 'Nam',
-    photoUrl: 'poses/cong-vien/nam/08-photo.jpg',
-    skeletonUrl: 'poses/cong-vien/nam/08-skeleton.png',
+    photoUrl: 'poses/cong-vien/nam/08-photo.webp',
+    skeletonUrl: 'poses/cong-vien/nam/08-skeleton.webp',
     tags: ['Toàn thân', 'Không nhìn máy', 'Mùa hoa'],
     tips: 'Tựa hông vào lan can, một tay chống ra sau, ngửa mặt nhìn lên tán hoa.',
     aiAnalysis: {
